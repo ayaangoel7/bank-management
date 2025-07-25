@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Bank Management System</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <script src="{{ url_for('static', filename='js/script.js') }}" defer></script>
+</head>
+<body>
+    <!-- Sidebar Navbar -->
+    <nav class="navbar">
+        <div class="logo">
+            <a href="{{ url_for('dashboard') }}">🏦 MyBank</a>
+        </div>
+        <ul class="nav-links">
+            <li><a href="{{ url_for('dashboard') }}">Dashboard</a></li>
+            <li><a href="{{ url_for('deposit') }}">Deposit</a></li>
+            <li><a href="{{ url_for('withdraw') }}">Withdraw</a></li>
+            <li><a href="{{ url_for('transfer') }}">Transfer</a></li>
+            <li><a href="{{ url_for('history') }}">Transaction History</a></li>
+            <li><a href="{{ url_for('logout') }}">Logout</a></li>
+        </ul>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- Flask Flash to Toast -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <script>
+          window.onload = function () {
+            {% for category, message in messages %}
+              showToast("{{ message }}", "{{ category }}");
+            {% endfor %}
+          };
+        </script>
+      {% endif %}
+    {% endwith %}
+</body>
+</html>
